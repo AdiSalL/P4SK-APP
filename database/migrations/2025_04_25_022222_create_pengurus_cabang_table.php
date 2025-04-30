@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kecamatan', function (Blueprint $table) {
+        Schema::create('pengurus_cabang', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_kecamatan");
-            $table->unsignedBigInteger("id_kabupaten");
-            $table->foreign("id_kabupaten")->references("id")->on("kabupaten")->onDelete('cascade');
+            $table->enum("status", ["pusat", "cabang"]);
+            $table->unsignedBigInteger("id_cabang");
+            $table->foreign("id_cabang")->references("id")->on("identitas_cabang")->onDelete('cascade');
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kecamatan');
+        Schema::dropIfExists('pengurus_cabang');
     }
 };

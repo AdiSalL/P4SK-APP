@@ -21,6 +21,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_detail_desa_kelurahan');
             $table->string('telepon')->nullable();
             $table->string('email')->nullable();
+            $table->enum('jenis', ['Pesantren', 'TPQ', 'MT', 'Madin']);
+            $table->enum('format', ['Tafaqquh', 'Tahfidh', 'Gabungan']);
+            $table->enum('legalitas_pesantren', ['Tanda Daftar Keberadaan Pondok Pesantren', 'Belum Terdaftar'])->nullable();
+            $table->integer('jumlah_santri_putra')->nullable();
+            $table->integer('jumlah_santri_putri')->nullable();
             $table->timestamps();
 
             // Foreign Keys
