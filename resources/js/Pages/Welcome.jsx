@@ -2,12 +2,37 @@ import DangerButton from "@/Components/DangerButton";
 import Modal from "@/Components/Modal";
 import NavLink from "@/Components/NavLink";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { Button } from "@headlessui/react";
+import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Welcome() {
+export default function Welcome({ message }) {
+    console.log(message);
+    const { data, setData, post, processing, errors } = useForm({
+        status: "pusat",
+        password: "",
+    });
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        await post("/login", {
+            onSuccess: () => {
+                document.getElementById("modal-1").close();
+            },
+        });
+    };
+
     return (
         <GuestLayout>
             <div className="text-black">Marhaban</div>
+            {processing ?? (
+                <div className="toast">
+                    <div className="alert alert-info">
+                        <span>New message arrived.</span>
+                    </div>
+                </div>
+            )}
+
             <Modal id="modal-1" text={"Masuk Ke Akun Pengurus"}>
                 <div>
                     <h3 className="font-bold text-lg">
@@ -16,46 +41,64 @@ export default function Welcome() {
                     <p className="py-4">
                         Masukkan Pengurus Bagian Dan Password
                     </p>
-                    <select defaultValue="Pick a color" className="select">
-                        <option disabled={true}>Pengurus Bagian</option>
-                        <option>Pengurus Pusat</option>
-                        <option>Pengurus Ancab / Cabang</option>
-                    </select>
-                    <label className="input validator">
-                        <svg
-                            className="h-[1em] opacity-50"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
+                    <form onSubmit={handleLogin}>
+                        <select
+                            className="select"
+                            value={data.status}
+                            onChange={(e) => setData("status", e.target.value)}
                         >
-                            <g
-                                strokeLinejoin="round"
-                                strokeLinecap="round"
-                                strokeWidth="2.5"
-                                fill="none"
-                                stroke="currentColor"
+                            <option
+                                disabled={true}
+                                defaultValue={"Pengurus Bagian"}
                             >
-                                <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
-                                <circle
-                                    cx="16.5"
-                                    cy="7.5"
-                                    r=".5"
-                                    fill="currentColor"
-                                ></circle>
-                            </g>
-                        </svg>
-                        <input
-                            type="password"
-                            required
-                            placeholder="Password"
-                            minlength="8"
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-                        />
-                    </label>
-                    <p className="validator-hint hidden"></p>
+                                Pengurus Bagian
+                            </option>
+                            <option value="pusat">Pengurus Pusat</option>
+                            <option value="cabang">
+                                Pengurus Ancab / Cabang
+                            </option>
+                        </select>
+                        <label className="input validator">
+                            <svg
+                                className="h-[1em] opacity-50"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                            >
+                                <g
+                                    strokeLinejoin="round"
+                                    strokeLinecap="round"
+                                    strokeWidth="2.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                >
+                                    <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
+                                    <circle
+                                        cx="16.5"
+                                        cy="7.5"
+                                        r=".5"
+                                        fill="currentColor"
+                                    ></circle>
+                                </g>
+                            </svg>
+                            <input
+                                type="password"
+                                required
+                                placeholder="Password"
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData("password", e.target.value)
+                                }
+                            />
+                        </label>
+                        <Button
+                            type="submit"
+                            className={"btn"}
+                            disabled={processing}
+                        >
+                            Login
+                        </Button>
+                    </form>
                 </div>
-
-                <NavLink>Login</NavLink>
             </Modal>
         </GuestLayout>
     );
