@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PengurusCabangSeeder extends Seeder
 {
@@ -15,10 +16,13 @@ class PengurusCabangSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table("pengurus_cabang")->insert([
-            "status" => "pusat",
-            "id_cabang" => null,
-            "password" => Hash::make("password")
+        DB::table('users')->insert([
+            'status' => 'pusat',
+            'id_cabang' => null,
+            'password' => Hash::make('password123'),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

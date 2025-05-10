@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Contracts\Session\Middleware\AuthenticatesSessions;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -11,9 +12,11 @@ Route::get('/', function () {
 })->name("login");
 
 Route::post('/login', [AuthController::class, "login"]);
+Route::post('/logout',[AuthController::class, "logout"]);
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function() {
     return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(["auth"])->name("dashboard");
+
 
 

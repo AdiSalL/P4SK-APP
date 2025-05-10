@@ -17,14 +17,18 @@ class AuthController extends Controller
             "password" => "required"
         ]);
 
-        // $pengurus = Pengurus::where("status", $user["status"])->first();
-
+        $pengurus = Pengurus::where("status", $user["status"])->first();
+        
         if(Auth::attempt($user)) {
-            return Inertia::render("Dashboard", [
-                "message" => "Pengurus berhasil",
-            ]);
-        }else { 
-            return redirect()->back()->with("message", "Terjadi kesalahan");
+            return redirect()->route("dashboard");
         }
+        
+    }
+
+
+    public function logout(Request $request) {
+        Auth::logout();
+
+        return redirect()->route("/login");
     }
 }
