@@ -11,15 +11,19 @@ use Inertia\Inertia;
 Route::get('/', function () {
     $user = Auth::user();
     return Inertia::render('Welcome', [
-        "user" => $user
+        "user" => $user,
+        "status" => session("status") ?? ""
     ]);
 })->name("login");
 
 Route::post('/login', [AuthController::class, "login"]);
-Route::post('/logout',[AuthController::class, "logout"]);
+Route::post('/logout',[AuthController::class, "logout"])->name('logout');
 
 Route::get('/dashboard', function() {
-    return Inertia::render('Dashboard');
+    $user = Auth::user();
+    return Inertia::render('Dashboard', [
+        "user" => $user
+    ]);
 })->middleware(["auth"])->name("dashboard");
 
 

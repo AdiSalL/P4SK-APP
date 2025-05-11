@@ -1,11 +1,10 @@
 import Navbar from "@/Components/Navbar";
 
-export default function AuthenticatedLayout({ children }) {
+export default function AuthenticatedLayout({ children, user = "" }) {
     return (
-        <div className="bg-green-900">
-            {" "}
-            <Navbar></Navbar>
-            {children}
-        </div>
+        <>
+            <Navbar user={user}></Navbar>
+            <div className="bg-green-900 min-h-screen -z-10">{children}</div>
+        </>
     );
 }

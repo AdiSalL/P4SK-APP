@@ -1,15 +1,16 @@
 import DangerButton from "@/Components/DangerButton";
 import Modal from "@/Components/Modal";
 import NavLink from "@/Components/NavLink";
+import Toast from "@/Components/Toast";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Button } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Welcome({ message, user }) {
-    console.log(user);
+export default function Welcome({ user, status }) {
     const { data, setData, post, processing, errors } = useForm({
         status: "pusat",
+        cabang: "",
         password: "",
     });
 
@@ -17,6 +18,9 @@ export default function Welcome({ message, user }) {
         e.preventDefault();
         await post("/login", {
             onSuccess: () => {
+                document.getElementById("modal-1").close();
+            },
+            onError: () => {
                 document.getElementById("modal-1").close();
             },
         });
@@ -28,6 +32,9 @@ export default function Welcome({ message, user }) {
                 <div className="text-white text-center text-2xl pt-10 font-bold">
                     Marhaban
                 </div>
+                {status && <Toast message={status} />}
+                {errors.status && <Toast message={errors.status}></Toast>}
+                {user && <NavLink href={route("dashboard")}>Dashboard</NavLink>}
                 {!user && (
                     <Modal id="modal-1" text={"Masuk Ke Akun Pengurus"}>
                         <div>
@@ -59,6 +66,25 @@ export default function Welcome({ message, user }) {
                                         Pengurus Ancab / Cabang
                                     </option>
                                 </select>
+                                {data.status == "cabang" && (
+                                    <select
+                                        className="select"
+                                        value={data.status}
+                                        onChange={(e) =>
+                                            setData("status", e.target.value)
+                                        }
+                                    >
+                                        <option
+                                            disabled={true}
+                                            defaultValue={"Berasal Dari Cabang"}
+                                        >
+                                            Berasal Dari Cabang
+                                        </option>
+                                        <option value="pusat">
+                                            Pengurus Pusat
+                                        </option>
+                                    </select>
+                                )}
                                 <label className="input validator">
                                     <svg
                                         className="h-[1em] opacity-50"
@@ -96,7 +122,7 @@ export default function Welcome({ message, user }) {
                                     className={"btn"}
                                     disabled={processing}
                                 >
-                                    Login
+                                    {processing ? "Memproses.." : "Login"}
                                 </Button>
                             </form>
                         </div>

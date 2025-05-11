@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('wilayah', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_cabang');
             $table->string('nama_provinsi');
             $table->timestamps();
         });

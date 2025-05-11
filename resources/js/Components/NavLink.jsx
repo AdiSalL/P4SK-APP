@@ -10,8 +10,10 @@ export default function NavLink({
         <Link
             {...props}
             className={
-                "inline-flex items-center border-b-2 pt-1 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none " +
-                (active ? "btn btn-neutral" : "btn btn-neutral btn-outline") +
+                "inline-flex items-center pt-1 text-white text-sm font-medium leading-5 transition duration-150 ease-in-out outline-none " +
+                (active
+                    ? "btn bg-green-800 text-white opacity-100"
+                    : "btn bg-green-800 text-white opacity-90") +
                 className
             }
         >

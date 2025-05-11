@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('kabupaten', function (Blueprint $table) {
             $table->id();
+            $table->string("kode_cabang");
             $table->string("nama_kabupaten");
             $table->unsignedBigInteger("id_provinsi");
             $table->foreign("id_provinsi")->references("id")->on("wilayah")->onDelete('cascade');
