@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->enum("status", ["pusat", "cabang"]);
-            $table->unsignedBigInteger("id_cabang")->nullable();
-            $table->foreign("id_cabang")->references("id")->on("identitas_cabang")->onDelete('cascade');
+            $table->enum("status", ["pusat", "cabang", "ancab"]);
+            $table->unsignedBigInteger("id_kabupaten")->nullable();
+            $table->foreign("id_kabupaten")->references("id")->on("kabupaten")->onDelete('cascade');
+            $table->unsignedBigInteger("id_ancab")->nullable();
+            $table->foreign("id_ancab")->references("id")->on("kecamatan")->onDelete("cascade");
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

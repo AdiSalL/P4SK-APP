@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use Illuminate\Contracts\Session\Middleware\AuthenticatesSessions;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +12,13 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     $user = Auth::user();
+    $kabupaten = Kabupaten::all();
+    $kecamatan = Kecamatan::all();
     return Inertia::render('Welcome', [
         "user" => $user,
-        "status" => session("status") ?? ""
+        "status" => session("status") ?? "",
+        "cabang" => $kabupaten,
+        "ancab" => $kecamatan,
     ]);
 })->name("login");
 

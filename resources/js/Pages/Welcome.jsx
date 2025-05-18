@@ -7,10 +7,11 @@ import { Button } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Welcome({ user, status }) {
+export default function Welcome({ user, status, cabang, ancab }) {
     const { data, setData, post, processing, errors } = useForm({
         status: "pusat",
         cabang: "",
+        ancab: "",
         password: "",
     });
 
@@ -63,28 +64,88 @@ export default function Welcome({ user, status }) {
                                         Pengurus Pusat
                                     </option>
                                     <option value="cabang">
-                                        Pengurus Ancab / Cabang
+                                        Pengurus Cabang
+                                    </option>
+                                    <option value="ancab">
+                                        Pengurus Ancab
                                     </option>
                                 </select>
-                                {data.status == "cabang" && (
+                                {data.status === "cabang" && (
                                     <select
                                         className="select"
-                                        value={data.status}
+                                        value={data.cabang}
                                         onChange={(e) =>
-                                            setData("status", e.target.value)
+                                            setData("cabang", e.target.value)
                                         }
                                     >
-                                        <option
-                                            disabled={true}
-                                            defaultValue={"Berasal Dari Cabang"}
-                                        >
+                                        <option disabled value="">
                                             Berasal Dari Cabang
                                         </option>
-                                        <option value="pusat">
-                                            Pengurus Pusat
-                                        </option>
+                                        {cabang.map((element) => (
+                                            <option
+                                                key={element.id}
+                                                value={element.id}
+                                            >
+                                                {element.nama_kabupaten}
+                                            </option>
+                                        ))}
                                     </select>
                                 )}
+
+                                {data.status === "ancab" && (
+                                    <>
+                                        <select
+                                            required
+                                            className="select"
+                                            value={data.cabang}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "cabang",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option disabled value="">
+                                                Berasal Dari Cabang
+                                            </option>
+                                            {cabang.map((element) => (
+                                                <option
+                                                    key={element.id}
+                                                    value={element.id}
+                                                >
+                                                    {element.nama_kabupaten}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        <select
+                                            className="select"
+                                            value={data.ancab}
+                                            onChange={(e) =>
+                                                setData("ancab", e.target.value)
+                                            }
+                                        >
+                                            <option disabled value="">
+                                                Berasal Dari Anak Cabang
+                                            </option>
+                                            {ancab
+                                                .filter(
+                                                    (k) =>
+                                                        k.id_kabupaten ==
+                                                        data.cabang
+                                                ) // only show ancab based on selected cabang
+                                                .map((element) => (
+                                                    <option
+                                                        key={element.id}
+                                                        value={element.id}
+                                                    >
+                                                        {element.nama_kecamatan}
+                                                    </option>
+                                                ))}
+                                        </select>
+                                    </>
+                                )}
+
                                 <label className="input validator">
                                     <svg
                                         className="h-[1em] opacity-50"

@@ -17,12 +17,31 @@ class PengurusCabangSeeder extends Seeder
     {
         //
         DB::table('users')->insert([
+            [
             'status' => 'pusat',
-            'id_cabang' => null,
+            'id_kabupaten' => null,
+            'id_ancab' => null,
             'password' => Hash::make('password123'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
+        ], [
+            'status' => 'cabang',
+            'id_kabupaten' => 1,
+            'id_ancab' => null,
+            'password' => Hash::make('password123'),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ], [
+            'status' => 'ancab',
+            'id_kabupaten' => 1,
+            'id_ancab' => 1,
+            'password' => Hash::make('password123'),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
         ]);
     }
 }
