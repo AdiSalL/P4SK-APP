@@ -9,7 +9,7 @@ import DataLembaga from "./Data/DataLembaga";
 import TambahAnggota from "./Data/TambahAnggota";
 import TambahLembaga from "./Data/TambahLembaga";
 
-export default function Dashboard({ user, dataCabang }) {
+export default function EditCabang({ user, dataCabang }) {
     const [page, setPage] = useState("identitasCabang");
 
     const changePage = (newPage) => {

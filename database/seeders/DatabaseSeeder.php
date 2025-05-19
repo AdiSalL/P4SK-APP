@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\IdentitasCabang;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             KabupatenSeeder::class,
             KecamatanSeeder::class,
             PengurusCabangSeeder::class,
+            IdentitasCabangSeeder::class
         ]);
 
     }

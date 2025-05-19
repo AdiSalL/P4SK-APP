@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
@@ -25,12 +26,11 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, "login"]);
 Route::post('/logout',[AuthController::class, "logout"])->name('logout');
 
-Route::get('/dashboard', function() {
-    $user = Auth::user();
-    return Inertia::render('Dashboard', [
-        "user" => $user
-    ]);
-})->middleware(["auth"])->name("dashboard");
+Route::get('/dashboard', [DataDashboardController::class, "dashboard"])->middleware("auth")->name("dashboard");
+Route::get('/dashboard/cabang/edit', [DataDashboardController::class, "cabangEdit"])->middleware("auth")->name("dashboard-edit");
+
+
+
 
 
 

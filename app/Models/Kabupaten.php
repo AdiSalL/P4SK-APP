@@ -8,4 +8,8 @@ class Kabupaten extends Model
 {
     //
     protected $table = "kabupaten";
+
+    public function identitasCabang() {
+        return $this->hasMany(IdentitasCabang::class, "id_kabupaten");
+    }
 }

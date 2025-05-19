@@ -4,7 +4,6 @@ import { Link, useForm } from "@inertiajs/react";
 
 export default function Navbar({ user }) {
     const { post } = useForm();
-    console.log(!user != null);
     function handleLogout() {
         post(route("logout"));
     }

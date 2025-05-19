@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class CabangSeeder extends Seeder
+class IdentitasCabangSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class CabangSeeder extends Seeder
     {
         DB::table('identitas_cabang')->insert([
             [
-                'alamat_sekretariat' => 'Jl. Merdeka No. 123, Klaten',
+                'alamat_sekratariat' => 'Jl. Merdeka No. 123, Klaten',
                 'kode_cabang' => 'CB001',
                 'tanggal_la' => '2023-01-15',
                 'rois_dewan_penasihat' => 'KH. Ahmad Dahlan',
@@ -23,20 +23,20 @@ class CabangSeeder extends Seeder
                 'sekrataris_umum' => 'Siti Aminah',
                 'bendahara_umum' => 'Muhammad Yusuf',
                 'id_wilayah' => 1,
-                'id_kabupaten' => 3301,
+                'id_kabupaten' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'alamat_sekretariat' => 'Jl. Sukabumi No. 45, Bandung',
+                'alamat_sekratariat' => 'Jl. Sukabumi No. 45, Bandung',
                 'kode_cabang' => 'CB002',
                 'tanggal_la' => '2023-02-20',
                 'rois_dewan_penasihat' => 'KH. Hasan Basri',
                 'ketua_dewan_harian' => 'Dr. Nina Fauziah',
                 'sekrataris_umum' => 'Ali Mukti',
                 'bendahara_umum' => 'Rahmawati',
-                'id_wilayah' => 2,
-                'id_kabupaten' => 3204,
+                'id_wilayah' => 1,
+                'id_kabupaten' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
