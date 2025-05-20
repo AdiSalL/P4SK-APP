@@ -27,10 +27,5 @@ Route::post('/login', [AuthController::class, "login"]);
 Route::post('/logout',[AuthController::class, "logout"])->name('logout');
 
 Route::get('/dashboard', [DataDashboardController::class, "dashboard"])->middleware("auth")->name("dashboard");
-Route::get('/dashboard/cabang/edit', [DataDashboardController::class, "cabangEdit"])->middleware("auth")->name("dashboard-edit");
-
-
-
-
-
-
+Route::get('/dashboard/cabang/edit/{id}', [DataDashboardController::class, "cabangEdit"])->middleware("auth")->name("cabang.edit");
+Route::put('/dashboard/cabang/update/{id}', [DataDashboardController::class, "updateCabang"])->middleware("auth");

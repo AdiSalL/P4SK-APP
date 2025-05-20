@@ -1,30 +1,25 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-
-export default forwardRef(function TextInput(
-    { type = 'text', className = '', isFocused = false, ...props },
-    ref,
-) {
-    const localRef = useRef(null);
-
-    useImperativeHandle(ref, () => ({
-        focus: () => localRef.current?.focus(),
-    }));
-
-    useEffect(() => {
-        if (isFocused) {
-            localRef.current?.focus();
-        }
-    }, [isFocused]);
-
+export default function TextInput({
+    titleInput = "Title Input",
+    condition = "",
+    type = "input",
+    placeholder = "",
+    className = "",
+    disabled = false,
+    onChange,
+    value,
+}) {
     return (
-        <input
-            {...props}
-            type={type}
-            className={
-                'rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ' +
-                className
-            }
-            ref={localRef}
-        />
+        <fieldset className={`fieldset`}>
+            <legend className="fieldset-legend">{titleInput}</legend>
+            <input
+                disabled={disabled}
+                type={`${type}`}
+                className={`text-black  bg-white input ${className}`}
+                placeholder={`${placeholder}`}
+                onChange={onChange}
+                value={value}
+            />
+            <p className="label">{condition}</p>
+        </fieldset>
     );
-});
+}

@@ -35,16 +35,21 @@ export default function Dashboard({ user, dataCabang }) {
                         text="Data lembaga"
                         onClick={() => changePage("dataLembaga")}
                     ></Button>
-                    <Button
-                        disabled={page === "tambahAnggota"}
-                        text="Tambah anggota"
-                        onClick={() => changePage("tambahAnggota")}
-                    ></Button>
-                    <Button
-                        disabled={page === "tambahLembaga"}
-                        text="Tambah lembaga"
-                        onClick={() => changePage("tambahLembaga")}
-                    ></Button>
+                    {user.status == "pusat" && (
+                        <>
+                            {" "}
+                            <Button
+                                disabled={page === "tambahAnggota"}
+                                text="Tambah anggota"
+                                onClick={() => changePage("tambahAnggota")}
+                            ></Button>
+                            <Button
+                                disabled={page === "tambahLembaga"}
+                                text="Tambah lembaga"
+                                onClick={() => changePage("tambahLembaga")}
+                            ></Button>
+                        </>
+                    )}
                 </div>
                 <div className="overflow-x-auto rounded-box border border-green-800 ">
                     {page == "identitasCabang" && (

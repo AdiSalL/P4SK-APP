@@ -10,7 +10,10 @@ export default function Navbar({ user }) {
     return (
         <div className="navbar bg-green-600 shadow-sm sticky top-0 z-50">
             <div className="navbar-start">
-                <NavLink href="/" className="btn btn-ghost text-xl">
+                <NavLink
+                    href={user ? route("dashboard") : "/"}
+                    className="btn btn-ghost text-xl"
+                >
                     P4SK
                 </NavLink>
             </div>

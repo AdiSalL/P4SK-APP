@@ -3,7 +3,6 @@ import NavLink from "@/Components/NavLink";
 import { Edit, Trash, Trash2Icon } from "lucide-react";
 
 export default function IdentitasCabang({ user, dataCabang }) {
-    console.log(dataCabang);
     return (
         <main className="opacity-90">
             {user.status != "pusat" ? (
@@ -13,6 +12,7 @@ export default function IdentitasCabang({ user, dataCabang }) {
                     <Button text="Download Template Excel"></Button>
                     <Button text="Import Data Excel"></Button>
                     <Button text="Export Data Excel"></Button>
+                    <NavLink className="btn">Tambah Cabang</NavLink>
                 </section>
             )}
 
@@ -44,14 +44,23 @@ export default function IdentitasCabang({ user, dataCabang }) {
                             <td>{cabang.bendahara_umum}</td>
                             <td>{cabang.wilayah.nama_provinsi}</td>
                             <td>{cabang.kabupaten.nama_kabupaten}</td>
-                            <td className="flex gap-2">
-                                <NavLink className="btn">
-                                    <Edit></Edit>
-                                </NavLink>
-                                <NavLink className="btn">
-                                    <Trash></Trash>
-                                </NavLink>
-                            </td>
+                            {user.status != "pusat" ? (
+                                ""
+                            ) : (
+                                <td className="flex gap-2">
+                                    <NavLink
+                                        href={route("cabang.edit", {
+                                            id: cabang.id,
+                                        })}
+                                        className="btn"
+                                    >
+                                        <Edit></Edit>
+                                    </NavLink>
+                                    <NavLink className="btn">
+                                        <Trash></Trash>
+                                    </NavLink>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>

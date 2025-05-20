@@ -9,6 +9,18 @@ class IdentitasCabang extends Model
     //
     protected $table = "identitas_cabang";
 
+    protected $fillable = [
+            'alamat_sekratariat',
+            'kode_cabang',
+            'tanggal_la',
+            'rois_dewan_penasihat',
+            'ketua_dewan_harian',
+            'sekrataris_umum',
+            'bendahara_umum',
+            'id_wilayah',
+            'id_kabupaten',
+    ];
+
     public function wilayah() {
         return $this->belongsTo(Wilayah::class, "id_wilayah");
     }
