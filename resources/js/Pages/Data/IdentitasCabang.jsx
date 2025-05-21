@@ -1,8 +1,17 @@
 import Button from "@/Components/Button";
+import Modal from "@/Components/Modal";
 import NavLink from "@/Components/NavLink";
+import { router } from "@inertiajs/react";
 import { Edit, Trash, Trash2Icon } from "lucide-react";
 
 export default function IdentitasCabang({ user, dataCabang }) {
+    const handleDelete = (id) => {
+        router.delete(route("cabang.delete", id), {
+            onSuccess: () => {
+                document.getElementById(`modal-delete-${id}`).close();
+            },
+        });
+    };
     return (
         <main className="opacity-90">
             {user.status != "pusat" ? (
@@ -12,7 +21,9 @@ export default function IdentitasCabang({ user, dataCabang }) {
                     <Button text="Download Template Excel"></Button>
                     <Button text="Import Data Excel"></Button>
                     <Button text="Export Data Excel"></Button>
-                    <NavLink className="btn">Tambah Cabang</NavLink>
+                    <NavLink className="btn" href={route("cabang.tambah")}>
+                        Tambah Cabang
+                    </NavLink>
                 </section>
             )}
 
@@ -56,9 +67,30 @@ export default function IdentitasCabang({ user, dataCabang }) {
                                     >
                                         <Edit></Edit>
                                     </NavLink>
-                                    <NavLink className="btn">
-                                        <Trash></Trash>
-                                    </NavLink>
+                                    <Modal
+                                        id={`modal-delete-${cabang.id}`}
+                                        text={<Trash></Trash>}
+                                    >
+                                        <div className="flex flex-col justify-end gap-2 text-2xl">
+                                            <h2 className="font-semibold">
+                                                Konfirmasi Hapus
+                                            </h2>
+                                            <p className="text-xl">
+                                                Apakah Anda yakin ingin
+                                                menghapus data ini? Kode Cabang{" "}
+                                                {cabang.kode_cabang}
+                                            </p>
+
+                                            <button
+                                                className="btn bg-red-500"
+                                                onClick={() =>
+                                                    handleDelete(cabang.id)
+                                                }
+                                            >
+                                                <Trash></Trash>Hapus
+                                            </button>
+                                        </div>
+                                    </Modal>
                                 </td>
                             )}
                         </tr>

@@ -21,6 +21,17 @@ class DataDashboardController extends Controller
         ]);
     }
 
+    public function cabangTambahPage() {
+        $user = Auth::user();
+        $wilayahList = Wilayah::all();
+        $kabupatenList = Kabupaten::all();
+        return Inertia::render('Data/TambahCabang', [
+            "user" => $user,
+            "wilayahList" => $wilayahList,
+            "kabupatenList" => $kabupatenList,
+        ]);
+    }
+
     public function cabangEdit($id) {
         $user = Auth::user();
         $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])->where("id", $id)->first(); 
@@ -52,5 +63,12 @@ class DataDashboardController extends Controller
         $identitasCabang->update($data);
 
         return redirect()->route('dashboard')->with('status', "Data cabang berhasil diubah");
+    }
+
+    public function deleteCabang($id) {           
+            $identitasCabang = IdentitasCabang::findOrFail($id);
+            $identitasCabang->delete();
+            return redirect()->route('dashboard')->with('status', "Data cabang berhasil dihapus");
+    
     }
 }

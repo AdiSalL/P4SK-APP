@@ -2,7 +2,7 @@ const Modal = ({ id, children, text }) => {
     return (
         <div>
             <button
-                className="btn button-green btn-text-green-600"
+                className="btn bg-red-800 btn-text-green-600"
                 onClick={() => document.getElementById(id).showModal()}
             >
                 {text}
@@ -12,7 +12,7 @@ const Modal = ({ id, children, text }) => {
                     {children}
                     <div className="modal-action">
                         <form method="dialog">
-                            <button className="btn text-white hover:bg-green-600">
+                            <button className="btn text-white bg-green-900 hover:bg-green-600">
                                 Tutup
                             </button>
                         </form>
