@@ -2,7 +2,7 @@ const Modal = ({ id, children, text }) => {
     return (
         <div>
             <button
-                className="btn bg-red-800 btn-text-green-600"
+                className="btn bg-green-700 btn-text-green-600"
                 onClick={() => document.getElementById(id).showModal()}
             >
                 {text}

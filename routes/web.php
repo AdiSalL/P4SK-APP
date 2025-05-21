@@ -29,11 +29,13 @@ Route::post('/logout',[AuthController::class, "logout"])->name('logout');
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/', [DataDashboardController::class, "dashboard"])->name("dashboard");
     
-    Route::get('/cabang/tambah', [DataDashboardController::class, "cabangTambahPage"])->name("cabang.tambah");
-    Route::post('/cabang/add', [DataDashboardController::class, "updateCabang"]);
+    Route::middleware('role:pusat')->group((function () {
+        Route::get('/cabang/tambah', [DataDashboardController::class, "cabangTambahPage"])->name("cabang.tambah");
+        Route::post('/cabang/add', [DataDashboardController::class, "updateCabang"]);
 
-    Route::get('/cabang/edit/{id}', [DataDashboardController::class, "cabangEdit"])->name("cabang.edit");
+        Route::get('/cabang/edit/{id}', [DataDashboardController::class, "cabangEdit"])->name("cabang.edit");
     
-    Route::put('/cabang/update/{id}', [DataDashboardController::class, "updateCabang"]);
-    Route::delete('/cabang/delete/{id}', [DataDashboardController::class, "deleteCabang"])->name("cabang.delete");
+        Route::put('/cabang/update/{id}', [DataDashboardController::class, "updateCabang"]);
+        Route::delete('/cabang/delete/{id}', [DataDashboardController::class, "deleteCabang"])->name("cabang.delete");
+    }));
 });
