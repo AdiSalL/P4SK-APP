@@ -3,14 +3,21 @@ import NavLink from "@/Components/NavLink";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm } from "@inertiajs/react";
 import IdentitasCabang from "./Data/IdentitasCabang";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataAnggota from "./Data/DataAnggota";
 import DataLembaga from "./Data/DataLembaga";
 import TambahAnggota from "./Data/TambahAnggota";
 import TambahLembaga from "./Data/TambahLembaga";
 
 export default function Dashboard({ user, dataCabang }) {
-    const [page, setPage] = useState("identitasCabang");
+    const [page, setPage] = useState(() => {
+        const storedValue = localStorage.getItem("savedPage");
+        return storedValue ? JSON.parse(storedValue) : "identitasCabang";
+    });
+
+    useEffect(() => {
+        localStorage.setItem("savedPage", JSON.stringify(page));
+    }, [page]);
 
     const changePage = (newPage) => {
         setPage(newPage);
@@ -58,7 +65,9 @@ export default function Dashboard({ user, dataCabang }) {
                             dataCabang={dataCabang}
                         ></IdentitasCabang>
                     )}
-                    {page == "dataAnggota" && <DataAnggota></DataAnggota>}
+                    {page == "dataAnggota" && (
+                        <DataAnggota user={user}></DataAnggota>
+                    )}
                     {page == "dataLembaga" && <DataLembaga></DataLembaga>}
                     {page == "tambahAnggota" && <TambahAnggota></TambahAnggota>}
                     {page == "tambahLembaga" && <TambahLembaga></TambahLembaga>}

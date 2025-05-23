@@ -1,5 +1,5 @@
 1. membuat dashboard
-2. membuat policy atau middleware:
+2. membuat policy dan middleware:
 
 -   pusat : all
 -   kabupaten : hanya provinsi miliknya dan dapat memanipulasi
