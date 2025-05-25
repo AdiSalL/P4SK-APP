@@ -32,10 +32,10 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::middleware('role:pusat')->group((function () {
         Route::get('/cabang/tambah', [DataDashboardController::class, "cabangTambahPage"])->name("cabang.tambah");
         Route::post('/cabang/add', [DataDashboardController::class, "updateCabang"]);
-
         Route::get('/cabang/edit/{id}', [DataDashboardController::class, "cabangEdit"])->name("cabang.edit");
-    
         Route::put('/cabang/update/{id}', [DataDashboardController::class, "updateCabang"]);
         Route::delete('/cabang/delete/{id}', [DataDashboardController::class, "deleteCabang"])->name("cabang.delete");
+
+        
     }));
 });

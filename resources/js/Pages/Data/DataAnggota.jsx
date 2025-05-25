@@ -12,7 +12,7 @@ export default function DataAnggota({ user }) {
                     <Button text="Import Data Excel"></Button>
                     <Button text="Export Data Excel"></Button>
                     <NavLink className="btn" href={route("cabang.tambah")}>
-                        Tambah Cabang
+                        Tambah Anggota
                     </NavLink>
                 </section>
             )}
