@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\IdentitasCabang;
 use App\Models\Kabupaten;
 use App\Models\Wilayah;
@@ -15,10 +16,30 @@ class DataDashboardController extends Controller
     public function dashboard() {
         $user = Auth::user();
         $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])->paginate(25); 
+        $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan'])->paginate(25);
         return Inertia::render('Dashboard', [
             "user" => $user,
-            "dataCabang" => $identitasCabang
+            "dataCabang" => $identitasCabang,
+            "dataAnggota" => $dataAnggota
         ]);
+    }
+
+    public function tambahCabang(Request $request) {
+        $data = $request->validate([
+            'alamat_sekratariat' => 'required|string',
+            'kode_cabang' => 'required|string',
+            'tanggal_la' => 'required|date',
+            'rois_dewan_penasihat' => 'required|string',
+            'ketua_dewan_harian' => 'required|string',
+            'sekrataris_umum' => 'required|string',
+            'bendahara_umum' => 'required|string',
+            'id_wilayah' => 'required|exists:wilayah,id',
+            'id_kabupaten' => 'required|exists:kabupaten,id',
+        ]);
+
+        IdentitasCabang::create($data);
+        return redirect()->route('dashboard')->with('status', "Data cabang berhasil diubah");
+  
     }
 
     public function cabangTambahPage() {
@@ -30,6 +51,7 @@ class DataDashboardController extends Controller
             "wilayahList" => $wilayahList,
             "kabupatenList" => $kabupatenList,
         ]);
+
     }
 
     public function cabangEdit($id) {

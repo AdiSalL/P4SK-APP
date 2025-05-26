@@ -9,7 +9,7 @@ import DataLembaga from "./Data/DataLembaga";
 import TambahAnggota from "./Data/TambahAnggota";
 import TambahLembaga from "./Data/TambahLembaga";
 
-export default function Dashboard({ user, dataCabang }) {
+export default function Dashboard({ user, dataCabang, dataAnggota }) {
     const [page, setPage] = useState(() => {
         const storedValue = localStorage.getItem("savedPage");
         return storedValue ? JSON.parse(storedValue) : "identitasCabang";
@@ -23,7 +23,7 @@ export default function Dashboard({ user, dataCabang }) {
         setPage(newPage);
     };
     return (
-        <AuthenticatedLayout user={user}>
+        <AuthenticatedLayout user={user} title={"Dasboard"}>
             <div className="-z-10 h-screen w-full">
                 <div>
                     <NavLink href="/">Home</NavLink>
@@ -66,7 +66,10 @@ export default function Dashboard({ user, dataCabang }) {
                         ></IdentitasCabang>
                     )}
                     {page == "dataAnggota" && (
-                        <DataAnggota user={user}></DataAnggota>
+                        <DataAnggota
+                            user={user}
+                            dataAnggota={dataAnggota}
+                        ></DataAnggota>
                     )}
                     {page == "dataLembaga" && <DataLembaga></DataLembaga>}
                     {page == "tambahAnggota" && <TambahAnggota></TambahAnggota>}

@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wilayah extends Model
+class DesaKelurahan extends Model
 {
     //
-    protected $table = "wilayah";
+    protected $table = "desa_kelurahan";
 
-    public function identitasCabang() {
-        return $this->hasMany(IdentitasCabang::class, "id_wilayah");
-    }
-    
+    protected $fillable = [
+        "id",
+        "nama_desa",
+        "id_kecamatan"
+    ];   
+
     public function anggota() {
         return $this->hasMany(Anggota::class, "id_wilayah");
     }

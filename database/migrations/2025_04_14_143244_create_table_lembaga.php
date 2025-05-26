@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kabupaten');
             $table->unsignedBigInteger('id_kecamatan');
             $table->unsignedBigInteger('id_desa_kelurahan');
-            $table->unsignedBigInteger('id_detail_desa_kelurahan');
+
             $table->string('telepon')->nullable();
             $table->string('email')->nullable();
             $table->enum('jenis', ['Pesantren', 'TPQ', 'MT', 'Madin']);
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->foreign('id_kabupaten')->references('id')->on('kabupaten')->onDelete('cascade');
             $table->foreign('id_kecamatan')->references('id')->on('kecamatan')->onDelete('cascade');
             $table->foreign('id_desa_kelurahan')->references('id')->on('desa_kelurahan')->onDelete('cascade');
-            $table->foreign('id_detail_desa_kelurahan')->references('id')->on('detail_desa_kelurahan')->onDelete('cascade');
+
         });
     }
 

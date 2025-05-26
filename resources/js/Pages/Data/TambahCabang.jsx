@@ -20,11 +20,11 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(`/dashboard/cabang/add`);
+        post(route("cabang.tambah.data"));
     };
 
     return (
-        <AuthenticatedLayout user={user}>
+        <AuthenticatedLayout user={user} title={"Tambah Cabang"}>
             <main className="max-w-4xl mx-auto p-6 space-y-4">
                 <section className="flex flex-col gap-2">
                     <h1 className="text-xl font-bold">Tambah Data Cabang</h1>
@@ -42,14 +42,13 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                             className="w-full"
                         />
                         <TextInput
-                            disabled={true}
                             titleInput="Kode Cabang"
                             value={data.kode_cabang}
                             onChange={(e) =>
                                 setData("kode_cabang", e.target.value)
                             }
                             error={errors.kode_cabang}
-                            className="w-full bg-green-50 text-white"
+                            className="w-full bg-green-50 text-black"
                         />
                     </div>
                     <div>
@@ -161,7 +160,7 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                         <Button
                             type="submit"
                             disabled={processing}
-                            text="Update Cabang"
+                            text="Tambah Cabang"
                         />
                         <NavLink href="/dashboard">
                             {" "}

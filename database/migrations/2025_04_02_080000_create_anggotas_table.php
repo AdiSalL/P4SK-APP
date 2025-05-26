@@ -16,15 +16,21 @@ return new class extends Migration
             $table->string("name");
 
             // Wilayah hierarchy
-            $table->unsignedBigInteger("id_wilayah"); // provinsi
-            $table->unsignedBigInteger("id_kabupaten");
-            $table->unsignedBigInteger("id_kecamatan");
-            $table->unsignedBigInteger("id_desa_kelurahan");
-            $table->unsignedBigInteger("id_detail_desa_kelurahan");
+            $table->unsignedBigInteger("id_wilayah")->nullable(); // provinsi
+            $table->unsignedBigInteger("id_kabupaten")->nullable();
+            $table->unsignedBigInteger("id_kecamatan")->nullable();
+            $table->unsignedBigInteger("id_desa_kelurahan")->nullable();
+
 
             $table->enum("status", ["aktif", "tidak"]);
             $table->string("keterangan")->nullable();
             $table->string("nia")->unique();
+            $table->string("dusun")->nullable();
+            $table->string("rt")->nullable();
+            $table->string("rw")->nullable();
+            $table->string("nama_jalan")->nullable();
+            $table->string("gang")->nullable();
+            $table->string("no")->nullable();
             $table->timestamps();
 
             // Foreign keys
@@ -32,7 +38,7 @@ return new class extends Migration
             $table->foreign("id_kabupaten")->references("id")->on("kabupaten")->onDelete('cascade');
             $table->foreign("id_kecamatan")->references("id")->on("kecamatan")->onDelete('cascade');
             $table->foreign("id_desa_kelurahan")->references("id")->on("desa_kelurahan")->onDelete('cascade');
-            $table->foreign("id_detail_desa_kelurahan")->references("id")->on("detail_desa_kelurahan")->onDelete('cascade');
+
         });
     }
 

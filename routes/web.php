@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataAnggotaController;
 use App\Http\Controllers\DataDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Kabupaten;
@@ -31,11 +32,13 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     
     Route::middleware('role:pusat')->group((function () {
         Route::get('/cabang/tambah', [DataDashboardController::class, "cabangTambahPage"])->name("cabang.tambah");
-        Route::post('/cabang/add', [DataDashboardController::class, "updateCabang"]);
+        Route::post('/cabang/add', [DataDashboardController::class, "tambahCabang"])->name("cabang.tambah.data");
         Route::get('/cabang/edit/{id}', [DataDashboardController::class, "cabangEdit"])->name("cabang.edit");
         Route::put('/cabang/update/{id}', [DataDashboardController::class, "updateCabang"]);
         Route::delete('/cabang/delete/{id}', [DataDashboardController::class, "deleteCabang"])->name("cabang.delete");
 
+        Route::get('/anggota/tambah', [DataAnggotaController::class, "addPage"])->name("anggota.tambah");
+        Route::post('/anggota/add', [DataAnggotaController::class, "addAnggota"])->name("anggota.tambah.data");
         
     }));
 });
