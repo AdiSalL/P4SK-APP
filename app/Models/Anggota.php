@@ -15,7 +15,9 @@ class Anggota extends Model
         'name', 'nia', 'id_wilayah', 'id_kabupaten', 'id_kecamatan', 'id_desa_kelurahan',
         'status', 'keterangan', 'dusun', 'rt', 'rw', 'nama_jalan', 'gang', 'no'
     ];
-    
+
+
+
     public function wilayah() {
         return $this->belongsTo(Wilayah::class, "id_wilayah");
     }

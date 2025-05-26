@@ -40,19 +40,12 @@ export default function TambahAnggota({
                 </section>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid  gap-2">
                         <TextInput
                             titleInput="Nama Lengkap"
                             value={data.name}
                             onChange={(e) => setData("name", e.target.value)}
                             error={errors.name}
-                            className="w-full"
-                        />
-                        <TextInput
-                            titleInput="NIA"
-                            value={data.nia}
-                            onChange={(e) => setData("nia", e.target.value)}
-                            error={errors.nia}
                             className="w-full"
                         />
                     </div>
@@ -163,6 +156,7 @@ export default function TambahAnggota({
                         <TextInput
                             titleInput="RT"
                             value={data.rt}
+                            type="number"
                             onChange={(e) => setData("rt", e.target.value)}
                             error={errors.rt}
                             className="w-full"
@@ -170,6 +164,7 @@ export default function TambahAnggota({
                         <TextInput
                             titleInput="RW"
                             value={data.rw}
+                            type="number"
                             onChange={(e) => setData("rw", e.target.value)}
                             error={errors.rw}
                             className="w-full"

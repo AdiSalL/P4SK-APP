@@ -26,10 +26,20 @@ class DataAnggotaController extends Controller
         ]);
     }
 
+
+    private function generateNIA($kodeCabang) {
+        do {
+            $randomNumber = str_pad(rand(0, 9999), 6, '0', STR_PAD_LEFT);
+            $niaNumber = substr($randomNumber, 0, 2) . '-' . substr($randomNumber, 2);
+            $nia =  $kodeCabang . $niaNumber;
+        }while(Anggota::where("nia", $nia)->exists());
+        
+        return $nia;
+    }
+
     public function addAnggota(Request $request) {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'nia' => 'required|string|max:100',
             'id_wilayah' => 'required|exists:wilayah,id',
             'id_kabupaten' => 'required|exists:kabupaten,id',
             'id_kecamatan' => 'required|exists:kecamatan,id',
@@ -41,7 +51,18 @@ class DataAnggotaController extends Controller
             'status' => 'nullable|string|max:100',
             'keterangan' => 'nullable|string|max:255',
         ]);
-        Anggota::create($validated);
+
+        $wilayah = Wilayah::findOrFail($validated["id_wilayah"]);
+        $kodeCabang = $wilayah->kode_cabang ?? 'C-00';
+
+        $nia = $this->generateNIA($kodeCabang);
+        $anggota = new Anggota();
+        strval($validated["rt"]);
+        strval($validated["rw"]);
+        $anggota->fill($validated);
+        $anggota->nia = $nia;
+        $anggota->save();
+
         return redirect()->route("dashboard")->with("success", "Anggota Berhasil Ditambahkan");
     }
     
