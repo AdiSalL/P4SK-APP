@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger("id_kecamatan")->nullable();
             $table->unsignedBigInteger("id_desa_kelurahan")->nullable();
 
+            
 
             $table->enum("status", ["aktif", "tidak"]);
             $table->string("keterangan")->nullable();

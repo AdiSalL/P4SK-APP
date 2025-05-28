@@ -16,7 +16,13 @@ class Anggota extends Model
         'status', 'keterangan', 'dusun', 'rt', 'rw', 'nama_jalan', 'gang', 'no'
     ];
 
+    public function  gelarDepan(){
+        return $this->belongsToMany(GelarDepan::class, "anggota_gelar_depan")->withPivot("urutan")->orderBy("pivot_urutan");
+    }
 
+    public function gelarBelakang() {
+        return $this->belongsToMany(GelarBelakang::class, "anggota_gelar_belakang")->withPivot("urutan")->orderBy("pivot_urutan");
+    }
 
     public function wilayah() {
         return $this->belongsTo(Wilayah::class, "id_wilayah");

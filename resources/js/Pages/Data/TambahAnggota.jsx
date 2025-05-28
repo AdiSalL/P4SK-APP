@@ -3,7 +3,7 @@ import TextInput from "@/Components/TextInput";
 import Button from "@/Components/Button";
 import { useForm } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
-import { ArrowBigLeft } from "lucide-react";
+import { ArrowBigLeft, PlusIcon } from "lucide-react";
 
 export default function TambahAnggota({
     user,
@@ -11,6 +11,8 @@ export default function TambahAnggota({
     kabupatenList,
     kecamatanList,
     desaList,
+    gelarDepan,
+    gelarBelakang,
 }) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
@@ -25,6 +27,8 @@ export default function TambahAnggota({
         dusun: "",
         status: "",
         keterangan: "",
+        id_gelar_depan: [],
+        id_gelar_belakang: [],
     });
 
     const handleSubmit = (e) => {
@@ -36,18 +40,86 @@ export default function TambahAnggota({
         <AuthenticatedLayout user={user} title={"Tambah Anggota"}>
             <main className="max-w-4xl mx-auto p-6 space-y-4">
                 <section className="flex flex-col gap-2">
-                    <h1 className="text-xl font-bold">Tambah Data Anggota</h1>
+                    <h1 className="text-2xl font-bold">Tambah Data Anggota</h1>
+                    <p>pastikan untuk mengisi data secara berurutan</p>
                 </section>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid  gap-2">
+                    <div className="grid gap-2">
                         <TextInput
                             titleInput="Nama Lengkap"
                             value={data.name}
                             onChange={(e) => setData("name", e.target.value)}
                             error={errors.name}
                             className="w-full"
+                            required={true}
                         />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                        <div>
+                            <label className="block font-medium">
+                                Gelar Depan
+                            </label>
+                            <div className="flex items-center gap-1">
+                                <select
+                                    className="select select-bordered w-full"
+                                    value={data.id_gelar_depan}
+                                    onChange={(e) =>
+                                        setData(
+                                            "id_gelar_depan",
+                                            e.target.value
+                                        )
+                                    }
+                                >
+                                    <option value="">Pilih Gelar Depan</option>
+                                    {gelarDepan.map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nama}
+                                        </option>
+                                    ))}
+                                </select>
+                                <button
+                                    className="btn btn-md"
+                                    //onClick={addingColumn}
+                                >
+                                    <PlusIcon></PlusIcon>
+                                </button>
+                            </div>
+                            {errors.id_wilayah && (
+                                <div className="text-red-500 text-sm">
+                                    {errors.id_wilayah}
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <label className="block font-medium">
+                                Gelar Belakang
+                            </label>
+                            <select
+                                className="select select-bordered w-full"
+                                value={data.id_kabupaten}
+                                onChange={(e) =>
+                                    setData("id_kabupaten", e.target.value)
+                                }
+                            >
+                                <option value="">Pilih Kabupaten</option>
+                                {kabupatenList
+                                    .filter(
+                                        (p) => p.id_provinsi == data.id_wilayah
+                                    )
+                                    .map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nama_kabupaten}
+                                        </option>
+                                    ))}
+                            </select>
+                            {errors.id_kabupaten && (
+                                <div className="text-red-500 text-sm">
+                                    {errors.id_kabupaten}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
@@ -87,11 +159,15 @@ export default function TambahAnggota({
                                 }
                             >
                                 <option value="">Pilih Kabupaten</option>
-                                {kabupatenList.map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {item.nama_kabupaten}
-                                    </option>
-                                ))}
+                                {kabupatenList
+                                    .filter(
+                                        (p) => p.id_provinsi == data.id_wilayah
+                                    )
+                                    .map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nama_kabupaten}
+                                        </option>
+                                    ))}
                             </select>
                             {errors.id_kabupaten && (
                                 <div className="text-red-500 text-sm">
@@ -114,11 +190,16 @@ export default function TambahAnggota({
                                 }
                             >
                                 <option value="">Pilih Kecamatan</option>
-                                {kecamatanList.map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {item.nama_kecamatan}
-                                    </option>
-                                ))}
+                                {kecamatanList
+                                    .filter(
+                                        (k) =>
+                                            k.id_kabupaten == data.id_kabupaten
+                                    )
+                                    .map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nama_kecamatan}
+                                        </option>
+                                    ))}
                             </select>
                             {errors.id_kecamatan && (
                                 <div className="text-red-500 text-sm">
@@ -138,11 +219,16 @@ export default function TambahAnggota({
                                 }
                             >
                                 <option value="">Pilih Desa/Kelurahan</option>
-                                {desaList.map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {item.nama}
-                                    </option>
-                                ))}
+                                {desaList
+                                    .filter(
+                                        (d) =>
+                                            d.id_kecamatan == data.id_kecamatan
+                                    )
+                                    .map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.nama}
+                                        </option>
+                                    ))}
                             </select>
                             {errors.id_desa_kelurahan && (
                                 <div className="text-red-500 text-sm">
@@ -188,11 +274,14 @@ export default function TambahAnggota({
                     />
 
                     <div>
-                        <label className="block font-medium">Status</label>
+                        <label className="block font-medium">
+                            <p>Status</p>
+                        </label>
                         <select
                             className="select select-bordered w-full"
                             value={data.status}
                             onChange={(e) => setData("status", e.target.value)}
+                            required={true}
                         >
                             <option value="" disabled={true}>
                                 Pilih Status
