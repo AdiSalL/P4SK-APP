@@ -13,30 +13,32 @@ export default function UpdateAnggota({
     desaList,
     gelarDepan,
     gelarBelakang,
-    dataAnggota,
+    anggota,
 }) {
+    // Ensure anggota is always an object to prevent undefined errors
+
     const { data, setData, post, processing, errors } = useForm({
-        name: dataAnggota.nama || "",
-        nia: dataAnggota.nia || "",
-        id_wilayah: dataAnggota.id_wilayah || "",
-        id_kabupaten: dataAnggota.id_kabupaten || "",
-        id_kecamatan: dataAnggota.id_kecamatan || "",
-        id_desa_kelurahan: dataAnggota.id_desa_kelurahan || "",
-        rt: dataAnggota.rt || "",
-        rw: dataAnggota.rw || "",
-        nama_jalan: "Jln." + (dataAnggota.nama_jalan || ""),
-        dusun: dataAnggota.dusun || "",
-        status: dataAnggota.status || "",
-        keterangan: dataAnggota.keterangan || "",
-        id_gelar_depan: Array.isArray(dataAnggota.id_gelar_depan)
-            ? dataAnggota.id_gelar_depan
-            : dataAnggota.id_gelar_depan
-            ? [dataAnggota.id_gelar_depan]
+        name: anggota.name || "",
+        nia: anggota.nia || "",
+        id_wilayah: anggota.id_wilayah || "",
+        id_kabupaten: anggota.id_kabupaten || "",
+        id_kecamatan: anggota.id_kecamatan || "",
+        id_desa_kelurahan: anggota.id_desa_kelurahan || "",
+        rt: anggota.rt || "",
+        rw: anggota.rw || "",
+        nama_jalan: anggota.nama_jalan || "",
+        dusun: anggota.dusun || "",
+        status: anggota.status || "",
+        keterangan: anggota.keterangan || "",
+        id_gelar_depan: Array.isArray(anggota.id_gelar_depan)
+            ? anggota.id_gelar_depan
+            : anggota.id_gelar_depan
+            ? [anggota.id_gelar_depan]
             : [],
-        id_gelar_belakang: Array.isArray(dataAnggota.id_gelar_belakang)
-            ? dataAnggota.id_gelar_belakang
-            : dataAnggota.id_gelar_belakang
-            ? [dataAnggota.id_gelar_belakang]
+        id_gelar_belakang: Array.isArray(anggota.id_gelar_belakang)
+            ? anggota.id_gelar_belakang
+            : anggota.id_gelar_belakang
+            ? [anggota.id_gelar_belakang]
             : [],
     });
 
@@ -51,6 +53,7 @@ export default function UpdateAnggota({
         e.preventDefault();
         post(route("anggota.tambah.data"));
     };
+
     const gelarDepanData = gelarDepan.map((item) => ({
         value: item.id,
         label: item.nama,
@@ -60,6 +63,26 @@ export default function UpdateAnggota({
         value: item.id,
         label: item.nama,
     }));
+    // Current values from dataAnggota for each input:
+    // Nama Lengkap:           safeDataAnggota.nama
+    // Gelar Depan:            safeDataAnggota.id_gelar_depan (array or single value)
+    // Gelar Belakang:         safeDataAnggota.id_gelar_belakang (array or single value)
+    // Provinsi:               safeDataAnggota.id_wilayah
+    // Kabupaten:              safeDataAnggota.id_kabupaten
+    // Kecamatan:              safeDataAnggota.id_kecamatan
+    // Desa/Kelurahan:         safeDataAnggota.id_desa_kelurahan
+    // RT:                     safeDataAnggota.rt
+    // RW:                     safeDataAnggota.rw
+    // Nama Jalan:             safeDataAnggota.nama_jalan
+    // Dusun:                  safeDataAnggota.dusun
+    // Status:                 safeDataAnggota.status
+    // Keterangan:             safeDataAnggota.keterangan
+
+    // All input values are controlled by the `data` state from useForm.
+    // When any input changes, setData updates the corresponding field in `data`.
+    // Example: onChange={e => setData("name", e.target.value)} for Nama Lengkap.
+    // This ensures the form always reflects the latest user input and updates state accordingly.
+
     return (
         <AuthenticatedLayout user={user} title={"Tambah Anggota"}>
             <main className="max-w-4xl mx-auto p-6 space-y-4">

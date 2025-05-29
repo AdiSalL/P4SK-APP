@@ -111,6 +111,51 @@ class DataAnggotaController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'id_wilayah' => 'required|exists:wilayah,id',
+            'id_kabupaten' => 'required|exists:kabupaten,id',
+            'id_kecamatan' => 'required|exists:kecamatan,id',
+            'id_desa_kelurahan' => 'nullable|exists:desa_kelurahan,id',
+            'rt' => 'nullable|string|max:10',
+            'rw' => 'nullable|string|max:10',
+            'nama_jalan' => 'nullable|string|max:255',
+            'dusun' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:100',
+            'keterangan' => 'nullable|string|max:255',
+            'id_gelar_depan' => 'nullable|array',
+            'id_gelar_depan' => 'exists:gelar_depan,id',
+            'id_gelar_belakang' => 'nullable|array',
+            'id_gelar_belakang' => 'exists:gelar_belakang,id'
+        ]);
+
+        $anggota = Anggota::findOrFail($id);
+        $anggota->update($validated);
+        if(isset($anggota->gelarDepan)) {
+            foreach($anggota->gelarDepan as $gelar) {
+                $gelar->delete();
+            }
+        }
+
+        if(isset($anggota->gelarBelakang)) {
+            foreach($anggota->gelarBelakang as $gelar) {
+                $gelar->delete();
+            }
+        }
+
+        if(!empty($validated['id_gelar_depan'])) {
+                foreach($validated['id_gelar_depan'] as $gelar_depan) {
+                    $anggota->gelarDepan()->attach($gelar_depan);
+                }
+            }
+            if(!empty($validated['id_gelar_belakang'])) {
+                foreach($validated['id_gelar_belakang'] as $gelar_belakang) {
+                    $anggota->gelarBelakang()->attach($gelar_belakang);
+                }
+            }
+    }
+
     public function delete($id) {
         $anggota = Anggota::findOrFail($id);
         if(isset($anggota->gelarDepan)) {

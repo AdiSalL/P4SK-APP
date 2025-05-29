@@ -91,9 +91,9 @@ export default function DataAnggota({ user, dataAnggota }) {
                             {user.status === "pusat" && (
                                 <td className="flex gap-2">
                                     <NavLink
-                                        // href={route("anggota.edit", {
-                                        //     id: data.id,
-                                        // })}
+                                        href={route("anggota.update", {
+                                            id: data.id,
+                                        })}
                                         className="btn"
                                     >
                                         <Edit />
