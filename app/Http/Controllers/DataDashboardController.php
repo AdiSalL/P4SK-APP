@@ -16,7 +16,7 @@ class DataDashboardController extends Controller
     public function dashboard() {
         $user = Auth::user();
         $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])->paginate(25); 
-        $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan'])->paginate(25);
+        $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan', 'gelarDepan', 'gelarBelakang'])->paginate(25);
         return Inertia::render('Dashboard', [
             "user" => $user,
             "dataCabang" => $identitasCabang,
@@ -91,6 +91,5 @@ class DataDashboardController extends Controller
             $identitasCabang = IdentitasCabang::findOrFail($id);
             $identitasCabang->delete();
             return redirect()->route('dashboard')->with('status', "Data cabang berhasil dihapus");
-    
     }
 }

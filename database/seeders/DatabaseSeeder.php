@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\GelarBelakang;
+use App\Models\GelarDepan;
 use App\Models\IdentitasCabang;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,7 +22,9 @@ class DatabaseSeeder extends Seeder
             KabupatenSeeder::class,
             KecamatanSeeder::class,
             PengurusCabangSeeder::class,
-            IdentitasCabangSeeder::class
+            IdentitasCabangSeeder::class,
+            GelarDepanSeeder::class,
+            GelarBelakangSeeder::class
         ]);
 
     }

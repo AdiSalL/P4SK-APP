@@ -5,7 +5,7 @@ import { useForm } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 import { ArrowBigLeft, PlusIcon } from "lucide-react";
 import Select from "react-select";
-export default function TambahAnggota({
+export default function UpdateAnggota({
     user,
     wilayahList,
     kabupatenList,
@@ -13,23 +13,39 @@ export default function TambahAnggota({
     desaList,
     gelarDepan,
     gelarBelakang,
+    dataAnggota,
 }) {
     const { data, setData, post, processing, errors } = useForm({
-        name: "",
-        nia: "",
-        id_wilayah: "",
-        id_kabupaten: "",
-        id_kecamatan: "",
-        id_desa_kelurahan: "",
-        rt: "",
-        rw: "",
-        nama_jalan: "Jln.",
-        dusun: "",
-        status: "",
-        keterangan: "",
-        id_gelar_depan: [],
-        id_gelar_belakang: [],
+        name: dataAnggota.nama || "",
+        nia: dataAnggota.nia || "",
+        id_wilayah: dataAnggota.id_wilayah || "",
+        id_kabupaten: dataAnggota.id_kabupaten || "",
+        id_kecamatan: dataAnggota.id_kecamatan || "",
+        id_desa_kelurahan: dataAnggota.id_desa_kelurahan || "",
+        rt: dataAnggota.rt || "",
+        rw: dataAnggota.rw || "",
+        nama_jalan: "Jln." + (dataAnggota.nama_jalan || ""),
+        dusun: dataAnggota.dusun || "",
+        status: dataAnggota.status || "",
+        keterangan: dataAnggota.keterangan || "",
+        id_gelar_depan: Array.isArray(dataAnggota.id_gelar_depan)
+            ? dataAnggota.id_gelar_depan
+            : dataAnggota.id_gelar_depan
+            ? [dataAnggota.id_gelar_depan]
+            : [],
+        id_gelar_belakang: Array.isArray(dataAnggota.id_gelar_belakang)
+            ? dataAnggota.id_gelar_belakang
+            : dataAnggota.id_gelar_belakang
+            ? [dataAnggota.id_gelar_belakang]
+            : [],
     });
+
+    // To show the selected options in react-select, use the value prop:
+    // For Gelar Depan:
+    // value={gelarDepanData.filter(opt => data.id_gelar_depan.includes(opt.value))}
+    // For Gelar Belakang:
+    // value={gelarBelakangData.filter(opt => data.id_gelar_belakang.includes(opt.value))}
+    // This is already implemented in your Select components.
 
     const handleSubmit = (e) => {
         e.preventDefault();

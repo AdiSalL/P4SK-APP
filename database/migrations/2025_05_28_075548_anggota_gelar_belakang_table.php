@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("anggota_id")->constrained()->onDelete("cascade");
             $table->foreignId("gelar_belakang_id")->constrained("gelar_belakang")->onDelete("cascade");
-            $table->unsignedTinyInteger("urutan");
+                $table->unsignedTinyInteger("urutan")->nullable();
             $table->timestamps();
 
             $table->unique(["anggota_id", "gelar_belakang_id"]);
@@ -29,6 +29,6 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::create("anggota_gelar_belakang");
+        Schema::dropIfExists("anggota_gelar_belakang");
     }
 };

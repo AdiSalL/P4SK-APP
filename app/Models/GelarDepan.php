@@ -9,3 +9,4 @@ class GelarDepan extends Model
     //
     protected $table = "gelar_depan";
 }
+

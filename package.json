@@ -33,6 +33,7 @@
         "cross-env": "^7.0.3",
         "laravel-vite-plugin": "^1.2.0",
         "lucide-react": "^0.511.0",
+        "react-select": "^5.10.1",
         "vite": "^6.2.4"
     }
 }

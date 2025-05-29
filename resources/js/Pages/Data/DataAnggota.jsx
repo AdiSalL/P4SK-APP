@@ -1,9 +1,18 @@
 import Button from "@/Components/Button";
 import Modal from "@/Components/Modal";
 import NavLink from "@/Components/NavLink";
+import { router } from "@inertiajs/react";
+
 import { Edit, Edit2, Trash } from "lucide-react";
 
 export default function DataAnggota({ user, dataAnggota }) {
+    const handleDelete = (id) => {
+        router.delete(route("anggota.delete", id), {
+            onSuccess: () => {
+                document.getElementById(`modal-delete-${id}`).close();
+            },
+        });
+    };
     return (
         <main className="opacity-90">
             {user.status != "pusat" ? (
@@ -38,22 +47,39 @@ export default function DataAnggota({ user, dataAnggota }) {
                     {dataAnggota.data.map((data, index) => (
                         <tr key={data.id}>
                             <td>{index + 1}</td>
-                            <td>{data.name}</td>
+                            <td>
+                                {data.gelar_depan
+                                    .filter(
+                                        (gd) => gd.pivot.anggota_id === data.id
+                                    )
+                                    .map((gd, idx) => (
+                                        <span key={idx}>{gd.nama} </span>
+                                    ))}
+                                {data.name}
+                                <span> </span>
+                                {data.gelar_belakang
+                                    .filter(
+                                        (gb) => gb.pivot.anggota_id === data.id
+                                    )
+                                    .map((gb, index) => (
+                                        <span key={index}>{gb.nama}</span>
+                                    ))}
+                            </td>
                             <td>{data.nia}</td>
                             <td>{data.wilayah?.nama_provinsi || "-"}</td>
                             <td>{data.kabupaten?.nama_kabupaten || "-"}</td>
                             <td>{data.kecamatan?.nama_kecamatan || "-"}</td>
                             <td>{data.desa_kelurahan?.nama || "-"}</td>
                             <td>
-                                {data.dusun ? `Dusun ${data.dusun}` : ""} ,
+                                {data.dusun ? `Dusun ${data.dusun},` : ""}
                                 <br></br>
                                 {[
-                                    data.rt ? `RT ${data.rt}` : "",
-                                    data.rw ? `RW ${data.rw}` : "",
+                                    data.rt ? `RT ${data.rt},` : "",
+                                    data.rw ? `RW ${data.rw},` : "",
                                 ]
                                     .filter(Boolean)
                                     .join(", ")}
-                                ,<br></br>
+                                <br></br>
                                 {data.nama_jalan
                                     ? `Jln. ${data.nama_jalan}`
                                     : ""}

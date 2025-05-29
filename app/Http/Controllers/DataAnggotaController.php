@@ -65,8 +65,7 @@ class DataAnggotaController extends Controller
             'id_gelar_belakang' => 'exists:gelar_belakang,id'
         ]);
 
-        DB::beginTransaction();
-        try {
+            DB::beginTransaction();
             $province = Wilayah::findOrFail($validated['id_wilayah']);
             $kodeCabang = $province->kode_cabang ?? "C-00";
 
@@ -76,23 +75,56 @@ class DataAnggotaController extends Controller
             $anggota->nia = $nia;
             $anggota->save();
 
-            if(!empty($validated['id_gelar_depan'])) {
-                $anggota->gelarDepan()->attach($validated['id_gelar_depan']);
-            }
 
+            if(!empty($validated['id_gelar_depan'])) {
+                foreach($validated['id_gelar_depan'] as $gelar_depan) {
+                    $anggota->gelarDepan()->attach($gelar_depan);
+                }
+            }
             if(!empty($validated['id_gelar_belakang'])) {
-                $anggota->gelarDepan()->attach($validated['id_gelar_belakang']);
+                foreach($validated['id_gelar_belakang'] as $gelar_belakang) {
+                    $anggota->gelarBelakang()->attach($gelar_belakang);
+                }
             }
 
             DB::commit();
             return redirect()->route("dashboard")->with("success", "Anggota Berhasil Ditambahkan");
-        }catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->route("dashboard")->withErrors("Gagal Menambahkan Anggota!, Pastikan Semua Data Terisi");
-        }
+            
     }
     
     public function edit(Request $request, $id) {
-        
+        $wilayahList = Wilayah::all();
+        $kabupatenList = Kabupaten::all();
+        $kecamatanList = Kecamatan::all();
+        $desaList = DesaKelurahan::all();
+        $gelarDepan = GelarDepan::all();
+        $gelarBelakang = GelarBelakang::all();
+        $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan', 'gelarDepan', 'gelarBelakang'])->findOrFail($id);
+        return Inertia::render("Data/UpdateAnggota", [
+            "anggota" => $dataAnggota,
+            "wilayahList" => $wilayahList,
+            "kabupatenList" => $kabupatenList,
+            "kecamatanList" => $kecamatanList,
+            "desaList" => $desaList,
+            "gelarDepan" => $gelarDepan,
+            "gelarBelakang" => $gelarBelakang
+        ]);
+    }
+
+    public function delete($id) {
+        $anggota = Anggota::findOrFail($id);
+        if(isset($anggota->gelarDepan)) {
+            foreach($anggota->gelarDepan as $gelar) {
+                $gelar->delete();
+            }
+        }
+
+        if(isset($anggota->gelarBelakang)) {
+            foreach($anggota->gelarBelakang as $gelar) {
+                $gelar->delete();
+            }
+        }
+        $anggota->delete();
+        return redirect()->route('dashboard')->with('status', "Data anggota berhasil dihapus");
     }
 }
