@@ -40,6 +40,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
         Route::get('/anggota/tambah', [DataAnggotaController::class, "addPage"])->name("anggota.tambah");
         Route::post('/anggota/add', [DataAnggotaController::class, "addAnggota"])->name("anggota.tambah.data");
         Route::get('/anggota/ubah/{id}', [DataAnggotaController::class, "edit"])->name("anggota.update");
+        Route::put("/anggota/update/{id}", [DataAnggotaController::class, "update"])->name("anggota.update.data");
         Route::delete('/anggota/delete/{id}', [DataAnggotaController::class, "delete"])->name("anggota.delete");
     }));
 });

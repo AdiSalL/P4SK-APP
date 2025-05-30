@@ -71,20 +71,24 @@ export default function DataAnggota({ user, dataAnggota }) {
                             <td>{data.kecamatan?.nama_kecamatan || "-"}</td>
                             <td>{data.desa_kelurahan?.nama || "-"}</td>
                             <td>
-                                {data.dusun ? `Dusun ${data.dusun},` : ""}
-                                <br></br>
-                                {[
-                                    data.rt ? `RT ${data.rt},` : "",
-                                    data.rw ? `RW ${data.rw},` : "",
-                                ]
-                                    .filter(Boolean)
-                                    .join(", ")}
-                                <br></br>
-                                {data.nama_jalan
-                                    ? `Jln. ${data.nama_jalan}`
-                                    : ""}
-                                .
+                                {data.dusun && <div>Dusun {data.dusun},</div>}
+
+                                <div>
+                                    {[
+                                        data.rt && `RT ${data.rt}`,
+                                        data.rw && `RW ${data.rw}`,
+                                        data.gang && `Gg. ${data.gang}`,
+                                        data.no && `No. ${data.no}`,
+                                    ]
+                                        .filter(Boolean)
+                                        .join(", ")}
+                                </div>
+
+                                {data.nama_jalan && (
+                                    <div>{data.nama_jalan}</div>
+                                )}
                             </td>
+
                             <td>{data.status}</td>
                             <td>{data.keterangan || "-"}</td>
 

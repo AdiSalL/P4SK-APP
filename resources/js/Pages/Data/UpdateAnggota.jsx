@@ -17,7 +17,7 @@ export default function UpdateAnggota({
 }) {
     // Ensure anggota is always an object to prevent undefined errors
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, put, processing, errors } = useForm({
         name: anggota.name || "",
         nia: anggota.nia || "",
         id_wilayah: anggota.id_wilayah || "",
@@ -29,6 +29,8 @@ export default function UpdateAnggota({
         nama_jalan: anggota.nama_jalan || "",
         dusun: anggota.dusun || "",
         status: anggota.status || "",
+        no: anggota.no || "",
+        gang: anggota.gang || "",
         keterangan: anggota.keterangan || "",
         id_gelar_depan: Array.isArray(anggota.id_gelar_depan)
             ? anggota.id_gelar_depan
@@ -42,16 +44,9 @@ export default function UpdateAnggota({
             : [],
     });
 
-    // To show the selected options in react-select, use the value prop:
-    // For Gelar Depan:
-    // value={gelarDepanData.filter(opt => data.id_gelar_depan.includes(opt.value))}
-    // For Gelar Belakang:
-    // value={gelarBelakangData.filter(opt => data.id_gelar_belakang.includes(opt.value))}
-    // This is already implemented in your Select components.
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("anggota.tambah.data"));
+        put(route("anggota.update.data", anggota.id));
     };
 
     const gelarDepanData = gelarDepan.map((item) => ({
@@ -63,31 +58,12 @@ export default function UpdateAnggota({
         value: item.id,
         label: item.nama,
     }));
-    // Current values from dataAnggota for each input:
-    // Nama Lengkap:           safeDataAnggota.nama
-    // Gelar Depan:            safeDataAnggota.id_gelar_depan (array or single value)
-    // Gelar Belakang:         safeDataAnggota.id_gelar_belakang (array or single value)
-    // Provinsi:               safeDataAnggota.id_wilayah
-    // Kabupaten:              safeDataAnggota.id_kabupaten
-    // Kecamatan:              safeDataAnggota.id_kecamatan
-    // Desa/Kelurahan:         safeDataAnggota.id_desa_kelurahan
-    // RT:                     safeDataAnggota.rt
-    // RW:                     safeDataAnggota.rw
-    // Nama Jalan:             safeDataAnggota.nama_jalan
-    // Dusun:                  safeDataAnggota.dusun
-    // Status:                 safeDataAnggota.status
-    // Keterangan:             safeDataAnggota.keterangan
-
-    // All input values are controlled by the `data` state from useForm.
-    // When any input changes, setData updates the corresponding field in `data`.
-    // Example: onChange={e => setData("name", e.target.value)} for Nama Lengkap.
-    // This ensures the form always reflects the latest user input and updates state accordingly.
 
     return (
-        <AuthenticatedLayout user={user} title={"Tambah Anggota"}>
+        <AuthenticatedLayout user={user} title={"Ubah Data Anggota"}>
             <main className="max-w-4xl mx-auto p-6 space-y-4">
                 <section className="flex flex-col gap-2">
-                    <h1 className="text-2xl font-bold">Tambah Data Anggota</h1>
+                    <h1 className="text-2xl font-bold">Ubah Data Anggota</h1>
                     <p>pastikan untuk mengisi data secara berurutan</p>
                 </section>
 
@@ -342,7 +318,7 @@ export default function UpdateAnggota({
                         <Button
                             type="submit"
                             disabled={processing}
-                            text="Tambah Anggota"
+                            text="Ubah Data Anggota"
                         />
                         <NavLink href="/dashboard">
                             <ArrowBigLeft /> Kembali

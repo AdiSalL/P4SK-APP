@@ -23,7 +23,9 @@ export default function TambahAnggota({
         id_desa_kelurahan: "",
         rt: "",
         rw: "",
-        nama_jalan: "Jln.",
+        nama_jalan: "",
+        gang: "",
+        no: "",
         dusun: "",
         status: "",
         keterangan: "",
@@ -248,6 +250,27 @@ export default function TambahAnggota({
                             type="number"
                             onChange={(e) => setData("rw", e.target.value)}
                             error={errors.rw}
+                            className="w-full"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                        <TextInput
+                            titleInput="Gang"
+                            value={data.gang}
+                            type="text"
+                            onChange={(e) => setData("gang", e.target.value)}
+                            error={errors.gang}
+                            className="w-full"
+                            placeholder="Masukkan Nama Gang"
+                        />
+                        <TextInput
+                            titleInput="Nomor"
+                            placeholder="Masukkan Nomor Rumah"
+                            value={data.no}
+                            type="number"
+                            onChange={(e) => setData("no", e.target.value)}
+                            error={errors.no}
                             className="w-full"
                         />
                     </div>

@@ -45,11 +45,13 @@ export default function Dashboard({ user, dataCabang, dataAnggota }) {
                     {user.status == "pusat" && (
                         <>
                             {" "}
-                            <Button
-                                disabled={page === "tambahAnggota"}
+                            <NavLink
+                                href={route("anggota.tambah")}
                                 text="Tambah anggota"
                                 onClick={() => changePage("tambahAnggota")}
-                            ></Button>
+                            >
+                                Tambah Anggota
+                            </NavLink>
                             <Button
                                 disabled={page === "tambahLembaga"}
                                 text="Tambah lembaga"
@@ -72,8 +74,6 @@ export default function Dashboard({ user, dataCabang, dataAnggota }) {
                         ></DataAnggota>
                     )}
                     {page == "dataLembaga" && <DataLembaga></DataLembaga>}
-                    {page == "tambahAnggota" && <TambahAnggota></TambahAnggota>}
-                    {page == "tambahLembaga" && <TambahLembaga></TambahLembaga>}
                 </div>
             </div>
         </AuthenticatedLayout>
