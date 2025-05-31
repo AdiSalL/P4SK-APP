@@ -80,9 +80,8 @@ export default function IdentitasCabang({ user, dataCabang }) {
                                                 menghapus data ini? Kode Cabang{" "}
                                                 {cabang.kode_cabang}
                                             </p>
-
                                             <button
-                                                className="btn bg-red-500"
+                                                className="btn  bg-red-500"
                                                 onClick={() =>
                                                     handleDelete(cabang.id)
                                                 }

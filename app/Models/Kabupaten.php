@@ -14,6 +14,10 @@ class Kabupaten extends Model
     }
 
     public function anggota() {
-        return $this->hasMany(Anggota::class, "id_wilayah");
+        return $this->hasMany(Anggota::class, "id_kabupaten");
+    }
+
+    public function lembaga() {
+        return $this->hasMany(Lembaga::class, "id_kabupaten");
     }
 }

@@ -8,4 +8,25 @@ class Lembaga extends Model
 {
     //
     protected $table = "lembaga";
+
+    public function provinsi() {
+        return $this->belongsTo(Wilayah::class, "id_provinsi");
+    }
+
+    public function kabupaten() {
+        return $this->belongsTo(Kabupaten::class, "id_kabupaten");
+    }
+
+    public function kecamatan() {
+        return $this->belongsTo(Kecamatan::class, "id_kecamatan");
+    }
+
+    public function kelurahan() {
+        return $this->belongsTo(DesaKelurahan::class, "id_desa_kelurahan");
+    }
+
+    public function legalitasFormal() {
+        return $this->belongsToMany(LegalitasFormal::class, "lembaga_legalitas_formal");
+    }
 }
+

@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             KabupatenSeeder::class,
             KecamatanSeeder::class,
             PengurusCabangSeeder::class,
-            IdentitasCabangSeeder::class,
             GelarDepanSeeder::class,
             GelarBelakangSeeder::class
         ]);

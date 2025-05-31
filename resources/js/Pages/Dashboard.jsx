@@ -9,10 +9,15 @@ import DataLembaga from "./Data/DataLembaga";
 import TambahAnggota from "./Data/TambahAnggota";
 import TambahLembaga from "./Data/TambahLembaga";
 
-export default function Dashboard({ user, dataCabang, dataAnggota }) {
+export default function Dashboard({
+    user,
+    dataCabang,
+    dataAnggota,
+    dataLembaga,
+}) {
     const [page, setPage] = useState(() => {
         const storedValue = localStorage.getItem("savedPage");
-        return storedValue ? JSON.parse(storedValue) : "identitasCabang";
+        return storedValue ? JSON.parse(storedValue) : "Identitas Cabang";
     });
 
     useEffect(() => {
@@ -23,24 +28,24 @@ export default function Dashboard({ user, dataCabang, dataAnggota }) {
         setPage(newPage);
     };
     return (
-        <AuthenticatedLayout user={user} title={"Dasboard"}>
+        <AuthenticatedLayout user={user} title={`Dashboard - ${page}`}>
             <div className="-z-10 h-screen w-full">
                 <div>
                     <NavLink href="/">Home</NavLink>
                     <Button
-                        disabled={page === "identitasCabang"}
-                        onClick={() => changePage("identitasCabang")}
+                        disabled={page === "Identitas Cabang"}
+                        onClick={() => changePage("Identitas Cabang")}
                         text="Identitas Cabang"
                     ></Button>
                     <Button
-                        disabled={page === "dataAnggota"}
+                        disabled={page === "Data Anggota"}
                         text="Data anggota"
-                        onClick={() => changePage("dataAnggota")}
+                        onClick={() => changePage("Data Anggota")}
                     ></Button>
                     <Button
-                        disabled={page === "dataLembaga"}
+                        disabled={page === "Data Lembaga"}
                         text="Data lembaga"
-                        onClick={() => changePage("dataLembaga")}
+                        onClick={() => changePage("Data Lembaga")}
                     ></Button>
                     {user.status == "pusat" && (
                         <>
@@ -48,32 +53,32 @@ export default function Dashboard({ user, dataCabang, dataAnggota }) {
                             <NavLink
                                 href={route("anggota.tambah")}
                                 text="Tambah anggota"
-                                onClick={() => changePage("tambahAnggota")}
                             >
                                 Tambah Anggota
                             </NavLink>
                             <Button
                                 disabled={page === "tambahLembaga"}
                                 text="Tambah lembaga"
-                                onClick={() => changePage("tambahLembaga")}
                             ></Button>
                         </>
                     )}
                 </div>
                 <div className="overflow-x-auto rounded-box border border-green-800 ">
-                    {page == "identitasCabang" && (
+                    {page == "Identitas Cabang" && (
                         <IdentitasCabang
                             user={user}
                             dataCabang={dataCabang}
                         ></IdentitasCabang>
                     )}
-                    {page == "dataAnggota" && (
+                    {page == "Data Anggota" && (
                         <DataAnggota
                             user={user}
                             dataAnggota={dataAnggota}
                         ></DataAnggota>
                     )}
-                    {page == "dataLembaga" && <DataLembaga></DataLembaga>}
+                    {page == "Data Lembaga" && (
+                        <DataLembaga user={user}></DataLembaga>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

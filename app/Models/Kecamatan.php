@@ -14,4 +14,8 @@ class Kecamatan extends Model
         "nama_kecamatan",
         "id_kabupaten"
     ];
+
+    public function lembaga() {
+        return $this->hasMany(Lembaga::class, "id_kecamatan");
+    }
 }

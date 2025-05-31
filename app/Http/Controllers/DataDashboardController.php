@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Models\IdentitasCabang;
 use App\Models\Kabupaten;
+use App\Models\Lembaga;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,12 @@ class DataDashboardController extends Controller
         $user = Auth::user();
         $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])->paginate(25); 
         $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan', 'gelarDepan', 'gelarBelakang'])->paginate(25);
+        $dataLembaga = Lembaga::with(["provinsi", 'kabupaten', 'kecamatan', 'kelurahan', 'legalitasFormal'])->paginate(25);
         return Inertia::render('Dashboard', [
             "user" => $user,
             "dataCabang" => $identitasCabang,
-            "dataAnggota" => $dataAnggota
+            "dataAnggota" => $dataAnggota,
+            "dataLembaga" => $dataLembaga,
         ]);
     }
 

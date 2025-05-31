@@ -16,4 +16,8 @@ class Wilayah extends Model
     public function anggota() {
         return $this->hasMany(Anggota::class, "id_wilayah");
     }
+
+    public function lembaga() {
+        return $this->hasMany(Lembaga::class, "id_provinsi");
+    }
 }
