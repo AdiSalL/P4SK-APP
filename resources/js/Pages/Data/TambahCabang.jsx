@@ -4,8 +4,10 @@ import Button from "@/Components/Button";
 import { useForm } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 import { ArrowBigLeft } from "lucide-react";
+import Select from "react-select";
 
 export default function TambahCabang({ user, wilayahList, kabupatenList }) {
+    console.log(wilayahList);
     const { data, setData, post, processing, errors } = useForm({
         alamat_sekratariat: "",
         kode_cabang: "",
@@ -22,6 +24,11 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
         e.preventDefault();
         post(route("cabang.tambah.data"));
     };
+
+    const wilayah = wilayahList.map((w) => ({
+        value: w.id,
+        label: w.nama_provinsi,
+    }));
 
     return (
         <AuthenticatedLayout user={user} title={"Tambah Cabang"}>
@@ -40,6 +47,7 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                             }
                             error={errors.alamat_sekratariat}
                             className="w-full"
+                            required={true}
                         />
                         <TextInput
                             titleInput="Kode Cabang"
@@ -49,6 +57,7 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                             }
                             error={errors.kode_cabang}
                             className="w-full bg-green-50 text-black"
+                            required={true}
                         />
                     </div>
                     <div>
@@ -60,6 +69,7 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                                 setData("tanggal_la", e.target.value)
                             }
                             className="input input-bordered w-full bg-green-50 text-black"
+                            required={true}
                         />
                         {errors.tanggal_la && (
                             <div className="text-red-500 text-sm">
@@ -110,22 +120,22 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                     </div>
                     <div>
                         <label className="block font-medium">Provinsi</label>
-                        <select
-                            className="select select-bordered w-full"
-                            value={data.id_wilayah}
-                            onChange={(e) =>
-                                setData("id_wilayah", e.target.value)
+                        <Select
+                            className="text-black"
+                            required={true}
+                            defaultValue={""}
+                            isLoading={processing}
+                            isClearable={true}
+                            isSearchable={true}
+                            options={wilayah}
+                            placeholder={"Pilih Provinsi"}
+                            value={wilayah.find(
+                                (dataOpt) => dataOpt.value == data.id_wilayah
+                            )}
+                            onChange={(selected) =>
+                                setData("id_wilayah", selected.value)
                             }
-                        >
-                            <option value="" disabled={true}>
-                                Pilih Provinsi
-                            </option>
-                            {wilayahList.map((wilayah) => (
-                                <option key={wilayah.id} value={wilayah.id}>
-                                    {wilayah.nama_provinsi}
-                                </option>
-                            ))}
-                        </select>
+                        />
                         {errors.id_wilayah && (
                             <div className="text-red-500 text-sm">
                                 {errors.id_wilayah}

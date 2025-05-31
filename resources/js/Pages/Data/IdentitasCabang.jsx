@@ -70,24 +70,18 @@ export default function IdentitasCabang({ user, dataCabang }) {
                                     <Modal
                                         id={`modal-delete-${cabang.id}`}
                                         text={<Trash></Trash>}
+                                        isDelete={true}
+                                        onClick={() => handleDelete(cabang.id)}
                                     >
-                                        <div className="flex flex-col justify-end gap-2 text-2xl">
-                                            <h2 className="font-semibold">
+                                        <div className="flex flex-col justify-end gap-2 ">
+                                            <h2 className="font-bold text-2xl">
                                                 Konfirmasi Hapus
                                             </h2>
-                                            <p className="text-xl">
+                                            <p className="">
                                                 Apakah Anda yakin ingin
                                                 menghapus data ini? Kode Cabang{" "}
                                                 {cabang.kode_cabang}
                                             </p>
-                                            <button
-                                                className="btn  bg-red-500"
-                                                onClick={() =>
-                                                    handleDelete(cabang.id)
-                                                }
-                                            >
-                                                <Trash></Trash>Hapus
-                                            </button>
                                         </div>
                                     </Modal>
                                 </td>

@@ -7,6 +7,7 @@ export default function TextInput({
     disabled = false,
     onChange,
     value,
+    required,
 }) {
     return (
         <fieldset className={`fieldset`}>
@@ -18,6 +19,7 @@ export default function TextInput({
                 placeholder={`${placeholder}`}
                 onChange={onChange}
                 value={value}
+                required={required}
             />
             <p className="label">{condition}</p>
         </fieldset>
