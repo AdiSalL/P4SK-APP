@@ -30,9 +30,14 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
         label: w.nama_provinsi,
     }));
 
+    const kabupaten = kabupatenList.map((k) => ({
+        value: k.id,
+        label: k.nama_kabupaten,
+    }));
+
     return (
         <AuthenticatedLayout user={user} title={"Tambah Cabang"}>
-            <main className="max-w-4xl mx-auto p-6 space-y-4">
+            <main className="max-w-full w-1/2  my-auto mx-auto p-6 space-y-4">
                 <section className="flex flex-col gap-2">
                     <h1 className="text-xl font-bold">Tambah Data Cabang</h1>
                 </section>
@@ -144,22 +149,22 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                     </div>
                     <div>
                         <label className="block font-medium">Kabupaten</label>
-                        <select
-                            className="select select-bordered w-full"
-                            value={data.id_kabupaten}
-                            onChange={(e) =>
-                                setData("id_kabupaten", e.target.value)
+                        <Select
+                            className="text-black"
+                            required={true}
+                            defaultValue={""}
+                            isLoading={processing}
+                            isClearable={true}
+                            isSearchable={true}
+                            options={kabupaten}
+                            placeholder={"Pilih Kabupaten"}
+                            value={kabupaten.find(
+                                (dataOpt) => dataOpt.value == data.id_kabupaten
+                            )}
+                            onChange={(selected) =>
+                                setData("id_kabupaten", selected.value)
                             }
-                        >
-                            <option value="" disabled={true}>
-                                Pilih Kabupaten
-                            </option>
-                            {kabupatenList.map((kab) => (
-                                <option key={kab.id} value={kab.id}>
-                                    {kab.nama_kabupaten}
-                                </option>
-                            ))}
-                        </select>
+                        />
                         {errors.id_kabupaten && (
                             <div className="text-red-500 text-sm">
                                 {errors.id_kabupaten}

@@ -6,7 +6,7 @@ export default function AuthenticatedLayout({ children, user = "", title }) {
         <>
             <Navbar user={user}></Navbar>
             <Head title={title ? title : "P4SK Website"}></Head>
-            <div className="bg-green-900 min-h-screen max-w-screen -z-10">
+            <div className="bg-green-900  w-full min-h-screen max-w-screen -z-10">
                 {children}
             </div>
         </>

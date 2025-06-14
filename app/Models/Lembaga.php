@@ -8,6 +8,21 @@ class Lembaga extends Model
 {
     //
     protected $table = "lembaga";
+    
+    protected $fillable = [
+        "nama_lembaga",
+        "id_provinsi",
+        "id_kabupaten",
+        "id_kecamatan",
+        "id_desa_kelurahan",
+        "telepon",
+        "email",
+        "jenis",
+        "format",
+        "legalitas_pesantren",
+        "jumlah_santri_putra",
+        "jumlah_santri_putra",
+    ];
 
     public function provinsi() {
         return $this->belongsTo(Wilayah::class, "id_provinsi");

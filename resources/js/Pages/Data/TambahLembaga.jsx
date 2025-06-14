@@ -1,8 +1,41 @@
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm } from "@inertiajs/react";
+import Select from "react-select";
 
-export default function TambahLembaga(user) {
+export default function TambahLembaga({
+    user,
+    provinsi,
+    kabupaten,
+    kecamatan,
+    desa,
+}) {
+    const { data, setData, post, processing, errors } = useForm({
+        nama_lembaga: "",
+        id_provinsi: "",
+        id_kabupaten: "",
+        id_kecamatan: "",
+        id_desa_kelurahan: "",
+        telepon: "",
+        email: "",
+        jenis: "",
+        format: "",
+        legalitas_pesantren: "",
+        jumlah_santri_putra: "",
+        jumlah_santri_putri: "",
+    });
     const handleSubmit = () => {};
+
+    const dataProvinsi = provinsi.map((item) => ({
+        value: item.id,
+        label: item.nama_provinsi,
+    }));
+
+    const dataKabupaten = kabupaten.map((item) => ({
+        value: item.id,
+        label: item.nama_kabupaten,
+    }));
+
     return (
         <AuthenticatedLayout user={user} title={"Tambah Lembaga"}>
             <main className="max-w-4xl mx-auto p-6 space-y-4">
@@ -14,10 +47,12 @@ export default function TambahLembaga(user) {
                     <div className="grid gap-2">
                         <TextInput
                             titleInput="Nama Lembaga"
-                            // value={}
-                            // onChange={(e) => setData("name", e.target.value)}
-                            // error={errors.name}
-                            // required={true}
+                            value={data.nama_lembaga}
+                            onChange={(e) =>
+                                setData("nama_lembaga", e.target.value)
+                            }
+                            error={errors.nama_lembaga}
+                            required={true}
                             className="w-full"
                             placeholder="Pastikan isi dengan benar"
                         />
@@ -28,25 +63,28 @@ export default function TambahLembaga(user) {
                             <label className="block font-medium">
                                 Provinsi
                             </label>
-                            <select
-                                className="select select-bordered w-full bg-white text-black"
-                                // value={data.id_wilayah}
-                                // onChange={(e) =>
-                                //     setData("id_wilayah", e.target.value)
-                                // }
-                            >
-                                <option value="">Pilih Provinsi</option>
-                                {/* {wilayahList.map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {item.nama_provinsi}
-                                    </option>
-                                ))} */}
-                            </select>
-                            {/* {errors.id_wilayah && (
+                            <Select
+                                className="text-black"
+                                options={dataProvinsi}
+                                value={dataProvinsi.find(
+                                    (dataOpt) =>
+                                        dataOpt.value == data.id_provinsi
+                                )}
+                                defaultValue={""}
+                                isLoading={processing}
+                                isClearable={true}
+                                isSearchable={true}
+                                placeholder={"Pilih Provinsi"}
+                                onChange={(selected) =>
+                                    setData("id_provinsi", selected.value)
+                                }
+                            ></Select>
+
+                            {errors.id_wilayah && (
                                 <div className="text-red-500 text-sm">
                                     {errors.id_wilayah}
                                 </div>
-                            )} */}
+                            )}
                         </div>
                     </div>
                 </form>
