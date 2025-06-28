@@ -4,6 +4,7 @@ import Button from "@/Components/Button";
 import { useForm } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 import { ArrowBigLeft } from "lucide-react";
+import Select from "react-select";
 
 export default function EditCabang({
     user,
