@@ -7,3 +7,4 @@
 -   membuat filter kategori dari daerah masin2
 -   merapikan select component
 -   upgrade versi inertia
+-   menambahkan tanggal LA awal dan akhir

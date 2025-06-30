@@ -16,7 +16,7 @@
         "autoprefixer": "^10.4.12",
         "daisyui": "^5.0.28",
         "postcss": "^8.4.31",
-        "react": "^18.2.0",
+        "react": "^18.3.1",
         "react-dom": "^18.2.0",
         "tailwindcss": "^4.1.4"
     },
@@ -31,8 +31,11 @@
         "@tailwindcss/vite": "^4.1.4",
         "axios": "^1.9.0",
         "cross-env": "^7.0.3",
+        "date-fns": "^4.1.0",
         "laravel-vite-plugin": "^1.2.0",
         "lucide-react": "^0.511.0",
+        "react-date-range": "^2.0.1",
+        "react-datepicker": "^8.4.0",
         "react-day-picker": "^9.7.0",
         "react-select": "^5.10.1",
         "vite": "^6.2.4"

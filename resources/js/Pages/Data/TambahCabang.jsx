@@ -5,9 +5,9 @@ import { useForm } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 import { ArrowBigLeft } from "lucide-react";
 import Select from "react-select";
+import CalendarDate from "@/Components/CalendarDate";
 
 export default function TambahCabang({ user, wilayahList, kabupatenList }) {
-    console.log(wilayahList);
     const { data, setData, post, processing, errors } = useForm({
         alamat_sekratariat: "",
         kode_cabang: "",
@@ -67,15 +67,15 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                     </div>
                     <div>
                         <label className="block font-medium">Tanggal LA</label>
-                        <input
-                            type="date"
-                            value={data.tanggal_la}
-                            onChange={(e) =>
-                                setData("tanggal_la", e.target.value)
-                            }
-                            className="input input-bordered w-full bg-green-50 text-black"
-                            required={true}
-                        />
+                        <div className="flex w-full justify-between gap-2">
+                            <CalendarDate
+                                value={data.tanggal_la}
+                                onChange={(e) =>
+                                    setData("tanggal_la", e.target.value)
+                                }
+                                required={true}
+                            ></CalendarDate>
+                        </div>
                         {errors.tanggal_la && (
                             <div className="text-red-500 text-sm">
                                 {errors.tanggal_la}
