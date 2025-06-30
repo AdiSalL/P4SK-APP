@@ -25,6 +25,7 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
         post(route("cabang.tambah.data"));
     };
 
+    console.log(data);
     const wilayah = wilayahList.map((w) => ({
         value: w.id,
         label: w.nama_provinsi,
@@ -70,11 +71,13 @@ export default function TambahCabang({ user, wilayahList, kabupatenList }) {
                         <div className="flex w-full justify-between gap-2">
                             <CalendarDate
                                 value={data.tanggal_la}
-                                onChange={(e) =>
-                                    setData("tanggal_la", e.target.value)
+                                onChange={(date) =>
+                                    setData(
+                                        "tanggal_la",
+                                        date.toISOString().split("T")[0]
+                                    )
                                 }
-                                required={true}
-                            ></CalendarDate>
+                            />
                         </div>
                         {errors.tanggal_la && (
                             <div className="text-red-500 text-sm">
