@@ -29,4 +29,14 @@ class IdentitasCabang extends Model
         return $this->belongsTo(Kabupaten::class, "id_kabupaten");
     }
     
+public function scopeVisibleToUser($query, $user)
+{
+    if ($user->status === 'cabang') {
+        return $query->where('id_kabupaten', $user->id_kabupaten);
+    } elseif ($user->status === 'ancab') {
+        return $query->where('id_kabupaten', $user->id_ancab);
+    }
+
+    return $query;
+}
 }

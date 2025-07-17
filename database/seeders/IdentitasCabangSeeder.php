@@ -17,7 +17,8 @@ class IdentitasCabangSeeder extends Seeder
             [
                 'alamat_sekratariat' => 'Jl. Merdeka No. 123, Klaten',
                 'kode_cabang' => 'CB001',
-                'tanggal_la' => '2023-01-15',
+                'tanggal_la_awal' => '2023-01-15',
+                'tanggal_la_akhir' => '2024-01-15',
                 'rois_dewan_penasihat' => 'KH. Ahmad Dahlan',
                 'ketua_dewan_harian' => 'Drs. Budi Santoso',
                 'sekrataris_umum' => 'Siti Aminah',
@@ -30,7 +31,8 @@ class IdentitasCabangSeeder extends Seeder
             [
                 'alamat_sekratariat' => 'Jl. Sukabumi No. 45, Bandung',
                 'kode_cabang' => 'CB002',
-                'tanggal_la' => '2023-02-20',
+                'tanggal_la_awal' => '2023-01-15',
+                'tanggal_la_akhir' => '2024-01-15',
                 'rois_dewan_penasihat' => 'KH. Hasan Basri',
                 'ketua_dewan_harian' => 'Dr. Nina Fauziah',
                 'sekrataris_umum' => 'Ali Mukti',

@@ -6,6 +6,7 @@ use App\Models\Anggota;
 use App\Models\IdentitasCabang;
 use App\Models\Kabupaten;
 use App\Models\Lembaga;
+use App\Models\Pengurus;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,21 @@ use Inertia\Inertia;
 
 class DataDashboardController extends Controller
 {
-    //
+    
     public function dashboard() {
+
         $user = Auth::user();
-        $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])->paginate(25); 
-        $dataAnggota = Anggota::with(['wilayah', 'kabupaten','kecamatan','desaKelurahan', 'gelarDepan', 'gelarBelakang'])->paginate(25);
-        $dataLembaga = Lembaga::with(["provinsi", 'kabupaten', 'kecamatan', 'kelurahan', 'legalitasFormal'])->paginate(25);
+    $identitasCabang = IdentitasCabang::with(['wilayah', 'kabupaten'])
+        ->visibleToUser($user)
+        ->paginate(25);
+
+    $dataAnggota = Anggota::with(['wilayah', 'kabupaten', 'kecamatan', 'desaKelurahan', 'gelarDepan', 'gelarBelakang'])
+        ->visibleToUser($user)
+        ->paginate(25);
+
+    $dataLembaga = Lembaga::with(['provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'legalitasFormal'])
+        ->visibleToUser($user)
+        ->paginate(25);
         return Inertia::render('Dashboard', [
             "user" => $user,
             "dataCabang" => $identitasCabang,

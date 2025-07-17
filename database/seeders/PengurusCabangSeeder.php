@@ -41,7 +41,15 @@ class PengurusCabangSeeder extends Seeder
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
-        ]
+        ], [
+            'status' => 'cabang',
+            'id_kabupaten' => 2,
+            'id_ancab' => null,
+            'password' => Hash::make('password123'),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
         ]);
     }
 }

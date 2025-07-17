@@ -43,5 +43,16 @@ class Lembaga extends Model
     public function legalitasFormal() {
         return $this->belongsToMany(LegalitasFormal::class, "lembaga_legalitas_formal");
     }
+
+public function scopeVisibleToUser($query, $user)
+{
+    if ($user->status === 'cabang') {
+        return $query->where('id_kabupaten', $user->id_kabupaten);
+    } elseif ($user->status === 'ancab') {
+        return $query->where('id_kabupaten', $user->id_ancab);
+    }
+
+    return $query;
+}
 }
 

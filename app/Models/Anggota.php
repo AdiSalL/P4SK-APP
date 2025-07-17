@@ -39,4 +39,14 @@ class Anggota extends Model
     public function desaKelurahan() {
         return $this->belongsTo(DesaKelurahan::class, "id_desa_kelurahan");
     }
+public function scopeVisibleToUser($query, $user)
+{
+    if ($user->status === 'cabang') {
+        return $query->where('id_kabupaten', $user->id_kabupaten);
+    } elseif ($user->status === 'ancab') {
+        return $query->where('id_kabupaten', $user->id_ancab);
+    }
+
+    return $query;
+}
 }

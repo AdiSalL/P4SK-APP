@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("alamat_sekratariat");
             $table->string("kode_cabang");
-            $table->date("tanggal_la");
+            $table->date("tanggal_la_awal");
+            $table->date("tanggal_la_akhir");
             $table->string("rois_dewan_penasihat");
             $table->string("ketua_dewan_harian");
             $table->string("sekrataris_umum");
